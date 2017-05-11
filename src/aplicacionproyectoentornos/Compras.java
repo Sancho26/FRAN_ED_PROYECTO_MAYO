@@ -228,7 +228,10 @@ public class Compras extends javax.swing.JFrame {
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
                 precio.setText(r.getString("Precio_total"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el último registro.");
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -243,7 +246,10 @@ public class Compras extends javax.swing.JFrame {
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
                 precio.setText(r.getString("Precio_total"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el primer registro.");
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -273,6 +279,7 @@ public class Compras extends javax.swing.JFrame {
                 cantidad.setText(r.getString("Cantidad"));
                 precio.setText(r.getString("Precio_total"));
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -307,15 +314,13 @@ public class Compras extends javax.swing.JFrame {
             String vProducto, vCantidad;
 
             vProducto = producto.getText();
-            //System.out.println("valor:" +vProducto);
             vCantidad = cantidad.getText();
-            
+
             if (vCantidad.equals("") || vProducto.equals("")) {
                 JOptionPane.showMessageDialog(null, "No se han introducido los datos correctamente", "Error", JOptionPane.ERROR_MESSAGE);
-                
+
             } else {
-            
-            
+
                 String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
                 String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
                 String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
@@ -345,7 +350,7 @@ public class Compras extends javax.swing.JFrame {
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
                 precio.setText(r.getString("Precio_total"));
-            
+
             }
 
         } catch (SQLException ex) {
