@@ -207,16 +207,29 @@ public class Compras extends javax.swing.JFrame {
     }//GEN-LAST:event_volverActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        // TODO add your handling code here:
-        insertar.setEnabled(false);
-        cancelar.setEnabled(false);
-        primera.setEnabled(true);
-        ultima.setEnabled(true);
-        anterior.setEnabled(true);
-        siguiente.setEnabled(true);
-        volver.setEnabled(true);
-        producto.setEditable(false);
-        cantidad.setEditable(false);
+        try {
+            // TODO add your handling code here:
+            insertar.setEnabled(false);
+            cancelar.setEnabled(false);
+            primera.setEnabled(true);
+            ultima.setEnabled(true);
+            anterior.setEnabled(true);
+            siguiente.setEnabled(true);
+            volver.setEnabled(true);
+            producto.setEditable(false);
+            cantidad.setEditable(false);
+            
+            if(r.first()){
+                id.setText(r.getString("Identificador"));
+                fecha.setText(r.getString("Fecha"));
+                producto.setText(r.getString("Producto"));
+                cantidad.setText(r.getString("Cantidad"));
+                precio.setText(r.getString("Precio_total"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteActionPerformed

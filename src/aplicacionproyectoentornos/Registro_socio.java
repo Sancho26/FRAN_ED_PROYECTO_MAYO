@@ -5,17 +5,50 @@
  */
 package aplicacionproyectoentornos;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author AlumMati
  */
 public class Registro_socio extends javax.swing.JFrame {
 
+    static public ResultSet r;
+
+    static public Connection connection;
+
     /**
      * Creates new form Registro_socio
      */
     public Registro_socio() {
-        initComponents();
+        try {
+            initComponents();
+
+            String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
+            String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+            String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+            connection = DriverManager.getConnection(url, user, pass);
+
+            Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "SELECT * FROM Socios";
+            r = s.executeQuery(query);
+            r.first();
+
+            id.setText(r.getString("Identificador"));
+            nombre.setText(r.getString("Nombre"));
+            apellidos.setText(r.getString("Apellidos"));
+            telefono.setText(r.getString("Telefono"));
+            dni.setText(r.getString("DNI"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro_socio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -46,6 +79,7 @@ public class Registro_socio extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         insertar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        primero = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
@@ -63,7 +97,7 @@ public class Registro_socio extends javax.swing.JFrame {
                 volverActionPerformed(evt);
             }
         });
-        getContentPane().add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(363, 363, -1, -1));
+        getContentPane().add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel2.setText("Identificador: ");
@@ -101,27 +135,65 @@ public class Registro_socio extends javax.swing.JFrame {
         getContentPane().add(dni, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 266, 126, -1));
 
         nuevo.setText("Nuevo");
-        getContentPane().add(nuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 322, -1, -1));
+        nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(nuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, -1, -1));
 
         siguiente.setText("Siguiente");
-        getContentPane().add(siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(274, 322, -1, -1));
+        siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, -1, -1));
 
         anterior.setText("Anterior");
-        getContentPane().add(anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 322, -1, -1));
+        anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorActionPerformed(evt);
+            }
+        });
+        getContentPane().add(anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 320, -1, -1));
 
         ultimo.setText("Último");
-        getContentPane().add(ultimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(458, 322, -1, -1));
+        ultimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ultimoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(ultimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 70, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacionproyectoentornos/imagen_corporativa.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         insertar.setText("Insertar");
         insertar.setEnabled(false);
+        insertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertarActionPerformed(evt);
+            }
+        });
         getContentPane().add(insertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 80, -1));
 
         cancelar.setText("Cancelar");
         cancelar.setEnabled(false);
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 80, -1));
+
+        primero.setText("Primero");
+        primero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                primeroActionPerformed(evt);
+            }
+        });
+        getContentPane().add(primero, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 80, -1));
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 328, -1, -1));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacionproyectoentornos/fondo_app.png"))); // NOI18N
@@ -133,6 +205,170 @@ public class Registro_socio extends javax.swing.JFrame {
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         dispose();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteActionPerformed
+        try {
+            if (r.next()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                apellidos.setText(r.getString("Apellidos"));
+                telefono.setText(r.getString("Telefono"));
+                dni.setText(r.getString("DNI"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el último registro.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro_socio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_siguienteActionPerformed
+
+    private void anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorActionPerformed
+        try {
+            if (r.previous()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                apellidos.setText(r.getString("Apellidos"));
+                telefono.setText(r.getString("Telefono"));
+                dni.setText(r.getString("DNI"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el primer registro.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro_socio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_anteriorActionPerformed
+
+    private void primeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeroActionPerformed
+        try {
+            if (r.first()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                apellidos.setText(r.getString("Apellidos"));
+                telefono.setText(r.getString("Telefono"));
+                dni.setText(r.getString("DNI"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro_socio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_primeroActionPerformed
+
+    private void ultimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ultimoActionPerformed
+        try {
+            if (r.last()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                apellidos.setText(r.getString("Apellidos"));
+                telefono.setText(r.getString("Telefono"));
+                dni.setText(r.getString("DNI"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro_socio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ultimoActionPerformed
+
+    private void nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoActionPerformed
+        JOptionPane.showMessageDialog(null, "Se va a registrar un nuevo socio. Pulse aceptar para continuar.");
+
+        id.setText(null);
+        nombre.setText(null);
+        apellidos.setText(null);
+        telefono.setText(null);
+        dni.setText(null);
+        
+        nombre.setEditable(true);
+        apellidos.setEditable(true);
+        telefono.setEditable(true);
+        dni.setEditable(true);
+
+        primero.setEnabled(false);
+        ultimo.setEnabled(false);
+        anterior.setEnabled(false);
+        siguiente.setEnabled(false);
+        volver.setEnabled(false);
+
+        insertar.setEnabled(true);
+        cancelar.setEnabled(true);
+    }//GEN-LAST:event_nuevoActionPerformed
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        try {
+            insertar.setEnabled(false);
+            cancelar.setEnabled(false);
+            primero.setEnabled(true);
+            ultimo.setEnabled(true);
+            anterior.setEnabled(true);
+            siguiente.setEnabled(true);
+            volver.setEnabled(true);
+            nombre.setEditable(false);
+            apellidos.setEditable(false);
+            telefono.setEditable(false);
+            dni.setEditable(false);
+            
+            if(r.first()){
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                apellidos.setText(r.getString("Apellidos"));
+                telefono.setText(r.getString("Telefono"));
+                dni.setText(r.getString("DNI"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro_socio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cancelarActionPerformed
+
+    private void insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarActionPerformed
+        try {
+        
+        String vNombre, vApellidos, vTelefono, vDNI;
+
+            vNombre = nombre.getText();
+            vApellidos = apellidos.getText();
+            vTelefono = telefono.getText();
+            vDNI = dni.getText();
+
+            if (vNombre.equals("") || vApellidos.equals("") || vTelefono.equals("") || vDNI.equals("")) {
+                JOptionPane.showMessageDialog(null, "No se han introducido los datos correctamente", "Error", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+
+            
+            
+                String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
+                String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+                String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+                connection = DriverManager.getConnection(url, user, pass);
+
+                Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+                String query = "INSERT INTO Socios (Nombre, Apellidos, Telefono, DNI) VALUES ('"+vNombre+"','"+vApellidos+"','"+vTelefono+"','"+vDNI+"')";
+
+                int resultado = s.executeUpdate(query);
+
+                insertar.setEnabled(false);
+                cancelar.setEnabled(false);
+                primero.setEnabled(true);
+                ultimo.setEnabled(true);
+                anterior.setEnabled(true);
+                siguiente.setEnabled(true);
+                volver.setEnabled(true);
+                nombre.setEditable(false);
+                apellidos.setEditable(false);
+                telefono.setEditable(false);
+                dni.setEditable(false);
+
+                String query2 = "SELECT * FROM Socios";
+                r = s.executeQuery(query2);
+                r.first();
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                apellidos.setText(r.getString("Apellidos"));
+                telefono.setText(r.getString("Telefono"));
+                dni.setText(r.getString("DNI"));
+            }
+            } catch (SQLException ex) {
+                Logger.getLogger(Registro_socio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_insertarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,6 +423,7 @@ public class Registro_socio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nombre;
     private javax.swing.JButton nuevo;
+    private javax.swing.JButton primero;
     private javax.swing.JButton siguiente;
     private javax.swing.JTextField telefono;
     private javax.swing.JButton ultimo;

@@ -5,17 +5,50 @@
  */
 package aplicacionproyectoentornos;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author AlumMati
  */
 public class Ventas extends javax.swing.JFrame {
+    
+    static public ResultSet r;
+
+    static public Connection connection;
 
     /**
      * Creates new form Ventas
      */
     public Ventas() {
-        initComponents();
+        try {
+            initComponents();
+            
+            String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
+            String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+            String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+            connection = DriverManager.getConnection(url, user, pass);
+
+            Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "SELECT * FROM Ventas";
+            r = s.executeQuery(query);
+            r.first();
+
+            id.setText(r.getString("Identificador"));
+            fecha.setText(r.getString("Fecha"));
+            producto.setText(r.getString("Producto"));
+            cantidad.setText(r.getString("Cantidad"));
+            precio.setText(r.getString("Precio_total"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -101,26 +134,61 @@ public class Ventas extends javax.swing.JFrame {
         getContentPane().add(precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(363, 252, 132, -1));
 
         nueva.setText("Nueva");
+        nueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevaActionPerformed(evt);
+            }
+        });
         getContentPane().add(nueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 315, -1, -1));
 
         siguiente.setText("Siguiente");
+        siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguienteActionPerformed(evt);
+            }
+        });
         getContentPane().add(siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(241, 315, -1, -1));
 
         anterior.setText("Anterior");
+        anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorActionPerformed(evt);
+            }
+        });
         getContentPane().add(anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 315, -1, -1));
 
         primera.setText("Primera");
+        primera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                primeraActionPerformed(evt);
+            }
+        });
         getContentPane().add(primera, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 315, -1, -1));
 
         ultima.setText("Última");
+        ultima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ultimaActionPerformed(evt);
+            }
+        });
         getContentPane().add(ultima, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 315, -1, -1));
 
         insertar.setText("Insertar");
         insertar.setEnabled(false);
+        insertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertarActionPerformed(evt);
+            }
+        });
         getContentPane().add(insertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 80, -1));
 
         cancelar.setText("Cancelar");
         cancelar.setEnabled(false);
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, 80, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacionproyectoentornos/imagen_corporativa.png"))); // NOI18N
@@ -135,6 +203,164 @@ public class Ventas extends javax.swing.JFrame {
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         dispose();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteActionPerformed
+        try {
+            if (r.next()) {
+                id.setText(r.getString("Identificador"));
+                fecha.setText(r.getString("Fecha"));
+                producto.setText(r.getString("Producto"));
+                cantidad.setText(r.getString("Cantidad"));
+                precio.setText(r.getString("Precio_total"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el último registro.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_siguienteActionPerformed
+
+    private void anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorActionPerformed
+        try {
+            if (r.previous()) {
+                id.setText(r.getString("Identificador"));
+                fecha.setText(r.getString("Fecha"));
+                producto.setText(r.getString("Producto"));
+                cantidad.setText(r.getString("Cantidad"));
+                precio.setText(r.getString("Precio_total"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el primer registro.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_anteriorActionPerformed
+
+    private void primeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeraActionPerformed
+        try {
+            if (r.first()) {
+                id.setText(r.getString("Identificador"));
+                fecha.setText(r.getString("Fecha"));
+                producto.setText(r.getString("Producto"));
+                cantidad.setText(r.getString("Cantidad"));
+                precio.setText(r.getString("Precio_total"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_primeraActionPerformed
+
+    private void ultimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ultimaActionPerformed
+        try {
+            if (r.last()) {
+                id.setText(r.getString("Identificador"));
+                fecha.setText(r.getString("Fecha"));
+                producto.setText(r.getString("Producto"));
+                cantidad.setText(r.getString("Cantidad"));
+                precio.setText(r.getString("Precio_total"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ultimaActionPerformed
+
+    private void nuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaActionPerformed
+        JOptionPane.showMessageDialog(null, "Se va a registrar una nueva venta. Pulse aceptar para continuar.");
+
+        id.setText(null);
+        fecha.setText(null);
+        producto.setText(null);
+        cantidad.setText(null);
+        precio.setText(null);
+
+        producto.setEditable(true);
+        cantidad.setEditable(true);
+
+        primera.setEnabled(false);
+        ultima.setEnabled(false);
+        anterior.setEnabled(false);
+        siguiente.setEnabled(false);
+        volver.setEnabled(false);
+
+        insertar.setEnabled(true);
+        cancelar.setEnabled(true);
+    }//GEN-LAST:event_nuevaActionPerformed
+
+    private void insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarActionPerformed
+        
+        try {
+        
+        String vProducto, vCantidad;
+
+            vProducto = producto.getText();
+            vCantidad = cantidad.getText();
+
+            if (vCantidad.equals("") || vProducto.equals("")) {
+                JOptionPane.showMessageDialog(null, "No se han introducido los datos correctamente", "Error", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+
+            
+                String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
+                String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+                String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+                connection = DriverManager.getConnection(url, user, pass);
+
+                Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+                String query = "INSERT INTO Ventas (Fecha, Producto, Cantidad, Precio_total) VALUES (CURDATE(), " + vProducto + ", " + vCantidad + ", (SELECT SUM(" + vCantidad + " * P.Precio) FROM Productos P, Ventas V WHERE P.Identificador = " + vProducto + "))";
+
+                int resultado = s.executeUpdate(query);
+
+                insertar.setEnabled(false);
+                cancelar.setEnabled(false);
+                primera.setEnabled(true);
+                ultima.setEnabled(true);
+                anterior.setEnabled(true);
+                siguiente.setEnabled(true);
+                volver.setEnabled(true);
+                producto.setEditable(false);
+                cantidad.setEditable(false);
+
+                String query2 = "SELECT * FROM Ventas";
+                r = s.executeQuery(query2);
+                r.first();
+                id.setText(r.getString("Identificador"));
+                fecha.setText(r.getString("Fecha"));
+                producto.setText(r.getString("Producto"));
+                cantidad.setText(r.getString("Cantidad"));
+                precio.setText(r.getString("Precio_total"));
+            } 
+
+            }catch (SQLException ex) {
+                Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_insertarActionPerformed
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        try {
+            insertar.setEnabled(false);
+            cancelar.setEnabled(false);
+            primera.setEnabled(true);
+            ultima.setEnabled(true);
+            anterior.setEnabled(true);
+            siguiente.setEnabled(true);
+            volver.setEnabled(true);
+            producto.setEditable(false);
+            cantidad.setEditable(false);
+            
+            if(r.first()){
+                id.setText(r.getString("Identificador"));
+                fecha.setText(r.getString("Fecha"));
+                producto.setText(r.getString("Producto"));
+                cantidad.setText(r.getString("Cantidad"));
+                precio.setText(r.getString("Precio_total"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cancelarActionPerformed
 
     /**
      * @param args the command line arguments

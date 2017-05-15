@@ -196,13 +196,24 @@ public class Menu extends javax.swing.JFrame {
 
     
                 if (tipo == 1) {
+                    
+                    JOptionPane.showMessageDialog(null, "Conexión correcta a la cuenta de Encargado");
+                    
                     Encargado enc = new Encargado();
                     enc.setVisible(true);
                     enc.setLocationRelativeTo(null);
+                    
+                    
+                    
                 } else if (tipo == 2) {
+                    
+                    JOptionPane.showMessageDialog(null, "Conexión correcta a la cuenta de Dependiente");
+                    
                     Dependiente dep = new Dependiente();
                     dep.setVisible(true);
                     dep.setLocationRelativeTo(null);
+                    
+                                       
                 }
       
                 usuario.setText(null);
