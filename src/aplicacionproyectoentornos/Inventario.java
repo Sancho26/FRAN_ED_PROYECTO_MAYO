@@ -5,17 +5,51 @@
  */
 package aplicacionproyectoentornos;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author AlumMati
  */
 public class Inventario extends javax.swing.JFrame {
 
+    static public ResultSet r;
+
+    static public Connection connection;
+
     /**
      * Creates new form Inventario
      */
     public Inventario() {
-        initComponents();
+        try {
+            initComponents();
+
+            String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
+            String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+            String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+            connection = DriverManager.getConnection(url, user, pass);
+
+            Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "SELECT * FROM Productos";
+            r = s.executeQuery(query);
+            r.first();
+
+            id.setText(r.getString("Identificador"));
+            nombre.setText(r.getString("Nombre"));
+            compania.setText(r.getString("Compania"));
+            precioC.setText(r.getString("Precio_compra"));
+            precioV.setText(r.getString("Precio_venta"));
+            existencias.setText(r.getString("Existencias"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -36,7 +70,7 @@ public class Inventario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         compania = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        precio = new javax.swing.JTextField();
+        precioC = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         existencias = new javax.swing.JTextField();
         nuevo = new javax.swing.JButton();
@@ -44,7 +78,11 @@ public class Inventario extends javax.swing.JFrame {
         anterior = new javax.swing.JButton();
         primero = new javax.swing.JButton();
         ultimo = new javax.swing.JButton();
+        insertar = new javax.swing.JButton();
+        cancelar = new javax.swing.JButton();
+        precioV = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,56 +104,111 @@ public class Inventario extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 204, 204));
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel2.setText("ID: ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 109, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, 20));
 
         id.setEditable(false);
-        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 106, 122, -1));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 122, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel3.setText("Nombre: ");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 147, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, 20));
 
         nombre.setEditable(false);
-        getContentPane().add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 144, 122, -1));
+        getContentPane().add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 122, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel4.setText("Compañía: ");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 185, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, -1, 20));
 
         compania.setEditable(false);
-        getContentPane().add(compania, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 182, 122, -1));
+        getContentPane().add(compania, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 122, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        jLabel5.setText("Precio: ");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 223, -1, -1));
+        jLabel5.setText("Precio de compra: ");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 110, 20));
 
-        precio.setEditable(false);
-        getContentPane().add(precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 220, 122, -1));
+        precioC.setEditable(false);
+        getContentPane().add(precioC, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 122, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel6.setText("Existencias: ");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 261, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, 80, 20));
 
         existencias.setEditable(false);
-        getContentPane().add(existencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 258, 122, -1));
+        existencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                existenciasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(existencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 122, -1));
 
         nuevo.setText("Nuevo");
+        nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoActionPerformed(evt);
+            }
+        });
         getContentPane().add(nuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 325, -1, -1));
 
         siguiente.setText("Siguiente");
+        siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguienteActionPerformed(evt);
+            }
+        });
         getContentPane().add(siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 325, -1, -1));
 
         anterior.setText("Anterior");
+        anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorActionPerformed(evt);
+            }
+        });
         getContentPane().add(anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 325, -1, -1));
 
         primero.setText("Primero");
+        primero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                primeroActionPerformed(evt);
+            }
+        });
         getContentPane().add(primero, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 325, -1, -1));
 
         ultimo.setText("Último");
+        ultimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ultimoActionPerformed(evt);
+            }
+        });
         getContentPane().add(ultimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(526, 325, -1, -1));
+
+        insertar.setText("Insertar");
+        insertar.setEnabled(false);
+        insertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(insertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 80, -1));
+
+        cancelar.setText("Cancelar");
+        cancelar.setEnabled(false);
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 80, -1));
+
+        precioV.setEditable(false);
+        getContentPane().add(precioV, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 120, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacionproyectoentornos/imagen_corporativa.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel9.setText("Precio de venta: ");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 100, 20));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacionproyectoentornos/fondo_app.png"))); // NOI18N
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -10, 800, 440));
@@ -126,6 +219,184 @@ public class Inventario extends javax.swing.JFrame {
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         dispose();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoActionPerformed
+        JOptionPane.showMessageDialog(null, "Se va a registrar un nuevo producto. Pulse aceptar para continuar.");
+
+        id.setText(null);
+        nombre.setText(null);
+        compania.setText(null);
+        precioC.setText(null);
+        existencias.setText(null);
+        precioV.setText(null);
+
+        nombre.setEditable(true);
+        compania.setEditable(true);
+        precioC.setEditable(true);
+        precioV.setEditable(true);
+        existencias.setEditable(true);
+
+        primero.setEnabled(false);
+        ultimo.setEnabled(false);
+        anterior.setEnabled(false);
+        siguiente.setEnabled(false);
+        volver.setEnabled(false);
+
+        insertar.setEnabled(true);
+        cancelar.setEnabled(true);
+    }//GEN-LAST:event_nuevoActionPerformed
+
+    private void existenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_existenciasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_existenciasActionPerformed
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        try {
+            insertar.setEnabled(false);
+            cancelar.setEnabled(false);
+            primero.setEnabled(true);
+            ultimo.setEnabled(true);
+            anterior.setEnabled(true);
+            siguiente.setEnabled(true);
+            volver.setEnabled(true);
+            nombre.setEditable(false);
+            compania.setEditable(false);
+            precioC.setEditable(false);
+            precioV.setEditable(false);
+            existencias.setEditable(false);
+
+            if (r.first()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                compania.setText(r.getString("Compania"));
+                precioC.setText(r.getString("Precio_compra"));
+                precioV.setText(r.getString("Precio_venta"));
+                existencias.setText(r.getString("Existencias"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cancelarActionPerformed
+
+    private void siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteActionPerformed
+        try {
+            if (r.next()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                compania.setText(r.getString("Compania"));
+                precioC.setText(r.getString("Precio_compra"));
+                precioV.setText(r.getString("Precio_venta"));
+                existencias.setText(r.getString("Existencias"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el último registro.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_siguienteActionPerformed
+
+    private void anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorActionPerformed
+        try {
+            if (r.previous()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                compania.setText(r.getString("Compania"));
+                precioC.setText(r.getString("Precio_compra"));
+                precioV.setText(r.getString("Precio_venta"));
+                existencias.setText(r.getString("Existencias"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ya estás en el primer registro.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_anteriorActionPerformed
+
+    private void primeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeroActionPerformed
+        try {
+            if (r.first()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                compania.setText(r.getString("Compania"));
+                precioC.setText(r.getString("Precio_compra"));
+                precioV.setText(r.getString("Precio_venta"));
+                existencias.setText(r.getString("Existencias"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_primeroActionPerformed
+
+    private void ultimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ultimoActionPerformed
+        try {
+            if (r.last()) {
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                compania.setText(r.getString("Compania"));
+                precioC.setText(r.getString("Precio_compra"));
+                precioV.setText(r.getString("Precio_venta"));
+                existencias.setText(r.getString("Existencias"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ultimoActionPerformed
+
+    private void insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarActionPerformed
+        try {
+
+            String vNombre, vCompania, vPrecioC, vPrecioV, vExistencias;
+
+            vNombre = nombre.getText();
+            vCompania = compania.getText();
+            vPrecioC = precioC.getText();
+            vPrecioV = precioV.getText();
+            vExistencias = existencias.getText();
+
+            if (vNombre.equals("") || vCompania.equals("") || vPrecioC.equals("") || vPrecioV.equals("") || vExistencias.equals("")) {
+                JOptionPane.showMessageDialog(null, "No se han introducido los datos correctamente", "Error", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+
+                String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
+                String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+                String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+                connection = DriverManager.getConnection(url, user, pass);
+
+                Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+                String query = "INSERT INTO Productos (Nombre, Compania, Precio_compra, Precio_venta, Existencias) VALUES ('" + vNombre + "','" + vCompania + "','" + vPrecioC + "','" + vPrecioV + "', '" + vExistencias + "')";
+
+                int resultado = s.executeUpdate(query);
+
+                insertar.setEnabled(false);
+                cancelar.setEnabled(false);
+                primero.setEnabled(true);
+                ultimo.setEnabled(true);
+                anterior.setEnabled(true);
+                siguiente.setEnabled(true);
+                volver.setEnabled(true);
+                nombre.setEditable(false);
+                compania.setEditable(false);
+                precioC.setEditable(false);
+                precioV.setEditable(false);
+                existencias.setEditable(false);
+
+                String query2 = "SELECT * FROM Productos";
+                r = s.executeQuery(query2);
+                r.first();
+                id.setText(r.getString("Identificador"));
+                nombre.setText(r.getString("Nombre"));
+                compania.setText(r.getString("Compania"));
+                precioC.setText(r.getString("Precio_compra"));
+                precioV.setText(r.getString("Precio_venta"));
+                existencias.setText(r.getString("Existencias"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_insertarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,9 +435,11 @@ public class Inventario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anterior;
+    private javax.swing.JButton cancelar;
     private javax.swing.JTextField compania;
     private javax.swing.JTextField existencias;
     private javax.swing.JTextField id;
+    private javax.swing.JButton insertar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -175,9 +448,11 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nombre;
     private javax.swing.JButton nuevo;
-    private javax.swing.JTextField precio;
+    private javax.swing.JTextField precioC;
+    private javax.swing.JTextField precioV;
     private javax.swing.JButton primero;
     private javax.swing.JButton siguiente;
     private javax.swing.JButton ultimo;

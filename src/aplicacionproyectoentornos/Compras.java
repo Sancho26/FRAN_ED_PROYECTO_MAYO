@@ -341,9 +341,10 @@ public class Compras extends javax.swing.JFrame {
 
                 Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-                String query = "INSERT INTO Compras (Fecha, Producto, Cantidad, Precio_total) VALUES (CURDATE(), " + vProducto + ", " + vCantidad + ", (SELECT SUM(" + vCantidad + " * P.Precio) FROM Productos P, Compras C WHERE P.Identificador = " + vProducto + "))";
-
+                String query = "INSERT INTO Compras (Fecha, Producto, Cantidad, Precio_total) VALUES (CURDATE(), " + vProducto + ", " + vCantidad + ", (SELECT SUM(" + vCantidad + " * P.Precio_compra) FROM Productos P WHERE P.Identificador = " + vProducto + "))";
+                String query2 = "UPDATE Productos SET Existencias = Existencias + "+vCantidad+"  WHERE Identificador = "+vProducto+"";
                 int resultado = s.executeUpdate(query);
+                int resultado2 = s.executeUpdate(query2);
 
                 insertar.setEnabled(false);
                 cancelar.setEnabled(false);
@@ -355,8 +356,8 @@ public class Compras extends javax.swing.JFrame {
                 producto.setEditable(false);
                 cantidad.setEditable(false);
 
-                String query2 = "SELECT * FROM Compras";
-                r = s.executeQuery(query2);
+                String query3 = "SELECT * FROM Compras";
+                r = s.executeQuery(query3);
                 r.first();
                 id.setText(r.getString("Identificador"));
                 fecha.setText(r.getString("Fecha"));
