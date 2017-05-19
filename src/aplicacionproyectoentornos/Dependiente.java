@@ -19,6 +19,7 @@ public class Dependiente extends javax.swing.JFrame {
     public Dependiente() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+        this.setTitle("SANCHO GAMES: DEPENDIENTE");
     }
 
     /**

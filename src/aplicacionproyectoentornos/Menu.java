@@ -33,7 +33,7 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
-        
+        this.setTitle("SANCHO GAMES: LOGIN");
         this.setLocationRelativeTo(null);
     }
 

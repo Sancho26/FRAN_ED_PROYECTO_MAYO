@@ -32,6 +32,7 @@ public class Compras extends javax.swing.JFrame {
         try {
             initComponents();
             setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+            this.setTitle("SANCHO GAMES: COMPRAS");
             String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
             String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
             String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
