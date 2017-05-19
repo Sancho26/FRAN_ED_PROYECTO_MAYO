@@ -5,6 +5,8 @@
  */
 package aplicacionproyectoentornos;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author AlumMati
@@ -16,6 +18,7 @@ public class Encargado extends javax.swing.JFrame {
      */
     public Encargado() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
     }
 
     /**

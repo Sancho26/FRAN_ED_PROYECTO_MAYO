@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,7 +31,7 @@ public class Inventario extends javax.swing.JFrame {
     public Inventario() {
         try {
             initComponents();
-
+            setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
             String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
             String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
             String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"

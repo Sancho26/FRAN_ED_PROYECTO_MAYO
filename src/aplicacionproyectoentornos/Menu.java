@@ -31,8 +31,10 @@ public class Menu extends javax.swing.JFrame {
 
     public Menu() {
         initComponents();
+        
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+        
         this.setLocationRelativeTo(null);
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono")).getImage());
     }
 
     /**
