@@ -80,7 +80,6 @@ public class Registro_socio extends javax.swing.JFrame {
         insertar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         primero = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -166,7 +165,7 @@ public class Registro_socio extends javax.swing.JFrame {
         });
         getContentPane().add(ultimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 70, -1));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacionproyectoentornos/imagen_corporativa.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/imagen_corporativa.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         insertar.setText("Insertar");
@@ -194,9 +193,8 @@ public class Registro_socio extends javax.swing.JFrame {
             }
         });
         getContentPane().add(primero, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 80, -1));
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 328, -1, -1));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacionproyectoentornos/fondo_app.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo_app.png"))); // NOI18N
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 430));
 
         pack();
@@ -419,7 +417,6 @@ public class Registro_socio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nombre;
     private javax.swing.JButton nuevo;
