@@ -334,8 +334,8 @@ public class Registro_socio extends javax.swing.JFrame {
             
             
                 String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
-                String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
-                String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+                String user = "root"; 
+                String pass = ""; 
                 connection = DriverManager.getConnection(url, user, pass);
 
                 Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
