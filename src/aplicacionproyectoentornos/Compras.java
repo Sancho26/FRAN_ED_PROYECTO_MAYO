@@ -34,8 +34,8 @@ public class Compras extends javax.swing.JFrame {
             setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
             this.setTitle("SANCHO GAMES: COMPRAS");
             String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
-            String user = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
-            String pass = "entornos"; //Cambiar a root y sin contraseña si no está creado el usuario "entornos"
+            String user = "root"; 
+            String pass = ""; 
             connection = DriverManager.getConnection(url, user, pass);
 
             Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -44,6 +44,7 @@ public class Compras extends javax.swing.JFrame {
             r.first();
 
             id.setText(r.getString("Identificador"));
+            socio.setText(r.getString("Socio"));
             fecha.setText(r.getString("Fecha"));
             producto.setText(r.getString("Producto"));
             cantidad.setText(r.getString("Cantidad"));
@@ -84,6 +85,8 @@ public class Compras extends javax.swing.JFrame {
         ultima = new javax.swing.JButton();
         insertar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        socio = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -105,38 +108,38 @@ public class Compras extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel2.setText("ID: ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 109, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 20, 20));
 
         id.setEditable(false);
-        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 106, 115, -1));
+        getContentPane().add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 120, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel3.setText("Fecha: ");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(243, 147, -1, -1));
 
         fecha.setEditable(false);
-        getContentPane().add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 144, 115, -1));
+        getContentPane().add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 144, 120, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel4.setText("IdProducto: ");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 185, 70, -1));
 
         producto.setEditable(false);
-        getContentPane().add(producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 182, 115, -1));
+        getContentPane().add(producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 182, 120, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel5.setText("Cantidad: ");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 223, -1, -1));
 
         cantidad.setEditable(false);
-        getContentPane().add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 115, -1));
+        getContentPane().add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 120, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel6.setText("Precio total: ");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 261, -1, -1));
 
         precio.setEditable(false);
-        getContentPane().add(precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 258, 115, -1));
+        getContentPane().add(precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 258, 120, -1));
 
         nueva.setText("Nueva");
         nueva.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +199,13 @@ public class Compras extends javax.swing.JFrame {
         });
         getContentPane().add(cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 80, -1));
 
+        socio.setEditable(false);
+        getContentPane().add(socio, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 120, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel9.setText("Socio nº: ");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 80, 20));
+
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/imagen_corporativa.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
@@ -221,9 +231,11 @@ public class Compras extends javax.swing.JFrame {
             volver.setEnabled(true);
             producto.setEditable(false);
             cantidad.setEditable(false);
+            socio.setEditable(false);
             
             if(r.first()){
                 id.setText(r.getString("Identificador"));
+                socio.setText(r.getString("Socio"));
                 fecha.setText(r.getString("Fecha"));
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
@@ -240,6 +252,7 @@ public class Compras extends javax.swing.JFrame {
             // TODO add your handling code here:
             if (r.next()) {
                 id.setText(r.getString("Identificador"));
+                socio.setText(r.getString("Socio"));
                 fecha.setText(r.getString("Fecha"));
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
@@ -258,6 +271,7 @@ public class Compras extends javax.swing.JFrame {
             // TODO add your handling code here:
             if (r.previous()) {
                 id.setText(r.getString("Identificador"));
+                socio.setText(r.getString("Socio"));
                 fecha.setText(r.getString("Fecha"));
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
@@ -275,6 +289,7 @@ public class Compras extends javax.swing.JFrame {
         try {
             if (r.first()) {
                 id.setText(r.getString("Identificador"));
+                socio.setText(r.getString("Socio"));
                 fecha.setText(r.getString("Fecha"));
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
@@ -290,6 +305,7 @@ public class Compras extends javax.swing.JFrame {
             // TODO add your handling code here:
             if (r.last()) {
                 id.setText(r.getString("Identificador"));
+                socio.setText(r.getString("Socio"));
                 fecha.setText(r.getString("Fecha"));
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
@@ -307,6 +323,7 @@ public class Compras extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Se va a registrar una nueva compra. Pulse aceptar para continuar.");
 
         id.setText(null);
+        socio.setText(null);
         fecha.setText(null);
         producto.setText(null);
         cantidad.setText(null);
@@ -314,6 +331,7 @@ public class Compras extends javax.swing.JFrame {
 
         producto.setEditable(true);
         cantidad.setEditable(true);
+        socio.setEditable(true);
 
         primera.setEnabled(false);
         ultima.setEnabled(false);
@@ -327,12 +345,13 @@ public class Compras extends javax.swing.JFrame {
 
     private void insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarActionPerformed
         try {
-            String vProducto, vCantidad;
+            String vProducto, vCantidad, vSocio;
 
+            vSocio = socio.getText();
             vProducto = producto.getText();
             vCantidad = cantidad.getText();
-
-            if (vCantidad.equals("") || vProducto.equals("")) {
+            
+            if (vCantidad.equals("") || vProducto.equals("") || vSocio.equals("")) {
                 JOptionPane.showMessageDialog(null, "No se han introducido los datos correctamente", "Error", JOptionPane.ERROR_MESSAGE);
 
             } else {
@@ -344,7 +363,7 @@ public class Compras extends javax.swing.JFrame {
 
                 Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-                String query = "INSERT INTO Compras (Fecha, Producto, Cantidad, Precio_total) VALUES (CURDATE(), " + vProducto + ", " + vCantidad + ", (SELECT SUM(" + vCantidad + " * P.Precio_compra) FROM Productos P WHERE P.Identificador = " + vProducto + "))";
+                String query = "INSERT INTO Compras (Socio, Fecha, Producto, Cantidad, Precio_total) VALUES ("+ vSocio + ", CURDATE(), " + vProducto + ", " + vCantidad + ", (SELECT SUM(" + vCantidad + " * P.Precio_compra) FROM Productos P WHERE P.Identificador = " + vProducto + "))";
                 String query2 = "UPDATE Productos SET Existencias = Existencias + "+vCantidad+"  WHERE Identificador = "+vProducto+"";
                 int resultado = s.executeUpdate(query);
                 int resultado2 = s.executeUpdate(query2);
@@ -358,11 +377,13 @@ public class Compras extends javax.swing.JFrame {
                 volver.setEnabled(true);
                 producto.setEditable(false);
                 cantidad.setEditable(false);
+                socio.setEditable(false);
 
                 String query3 = "SELECT * FROM Compras";
                 r = s.executeQuery(query3);
                 r.first();
                 id.setText(r.getString("Identificador"));
+                socio.setText(r.getString("Socio"));
                 fecha.setText(r.getString("Fecha"));
                 producto.setText(r.getString("Producto"));
                 cantidad.setText(r.getString("Cantidad"));
@@ -435,11 +456,13 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JButton nueva;
     private javax.swing.JTextField precio;
     private javax.swing.JButton primera;
     private javax.swing.JTextField producto;
     private javax.swing.JButton siguiente;
+    private javax.swing.JTextField socio;
     private javax.swing.JButton ultima;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables

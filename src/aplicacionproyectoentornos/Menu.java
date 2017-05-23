@@ -121,8 +121,13 @@ public class Menu extends javax.swing.JFrame {
             // TODO add your handling code here:
             
             char passwordArray[] = password.getPassword(); 
-
-            String password_cadena = new String(passwordArray); //Para pasar los carácteres a un String para poder compararlo y validar el inicio de sesión
+            
+            
+            /*
+            En estas líneas convierto la contraseña que hemos introducido a String
+            ya que originalmente es un array de chars.
+            */
+            String password_cadena = new String(passwordArray); 
             String usu_app = usuario.getText();
 
             String url = "jdbc:mysql://localhost:3306/tienda_videojuegos";
@@ -134,7 +139,9 @@ public class Menu extends javax.swing.JFrame {
             String query = "SELECT Tipo FROM usuarios WHERE Usuario = '" + usu_app + "' AND Password = '" + password_cadena + "'";
             r = s.executeQuery(query);
 
-            if (r.next()) { //Este if está creado para evitar el error de resultset vacío
+            
+            //Este if está creado para evitar el error de resultset vacío
+            if (r.next()) { 
 
                 r.first();
                 
@@ -153,7 +160,7 @@ public class Menu extends javax.swing.JFrame {
                     
                     
                     
-                } else if (tipo == 2) {
+                } else if (tipo > 1) {
                     
                     JOptionPane.showMessageDialog(null, "Conexión correcta a la cuenta de Dependiente");
                     
